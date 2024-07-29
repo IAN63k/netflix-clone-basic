@@ -47,9 +47,10 @@ const renderCategories = async (data, categories) => {
 
             const card = document.createElement('div');
             card.classList.add('card');
-            card.setAttribute('data-title', item.Title);
+            card.id = "show-item";
+            card.setAttribute('data-id', item.id);
             card.innerHTML = `
-                    <img src="${item.Carrusel}" alt="${item.Title}" data-item="${item.id}" id="show-item">
+                    <img src="${item.Carrusel}" alt="${item.Title}" data-item="${item.id}">
                     <div class="card__control">
                         <span>${item.Title}</span>
                         <div>
@@ -72,7 +73,7 @@ const renderCategories = async (data, categories) => {
         main.appendChild(wrapperSlide);
     });
 
-
+    modal(data);
 }
 
 const createCard = (data) => {
@@ -95,4 +96,71 @@ const createCard = (data) => {
         container.appendChild(card);
     });
 }
-// renderData();
+
+
+const modal = (data) => {
+    const modal = document.querySelector('#show-modal-item');
+    const modalClose = document.querySelector('.modal-close');
+
+    const modalOpen = document.querySelectorAll('#show-item');
+
+    // datos
+    const modalTitle = document.querySelector('.item-title');
+    const modalImg = document.querySelector('.item-video');
+    const modalDescription = document.querySelector('.item-description');
+    const itemValue = document.querySelector('.item-value');
+
+    // show modal
+    modalOpen.forEach((item) => {
+        item.addEventListener('click', () => {
+                modal.style.display = 'block';
+
+                const id = item.getAttribute('data-id');
+                const dataItem = data.find(element => element.id === id);
+                modalTitle.innerHTML = dataItem.Title;
+                modalImg.src = dataItem.Trailer; 
+                modalDescription.innerHTML = dataItem.Description;
+                itemValue.innerHTML = dataItem.Value;                
+                const category = dataItem.Type;
+                similarCategory(category, data);
+
+        });
+    });
+
+
+    // Close modal
+    modalClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    });
+
+
+}
+
+
+const similarCategory = (category, data) => {
+
+    // obtener los 9 primeros elementos de la categoria
+    const similarItems = data.filter(item => item.Type === category).slice(0, 9);
+    
+    const container = document.querySelector('.similar-item');
+    
+    similarItems.forEach(itemCategory => {
+        const htmlImage = `<img src="${itemCategory.Carrusel}" alt="${itemCategory.Title}" data-id="${itemCategory.id}" id="show-item">`;
+        container.innerHTML += htmlImage;
+
+    });
+
+}
+

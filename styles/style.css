@@ -436,15 +436,40 @@ main {
 
 
 #show-modal-item {
-    position: absolute;
+    position: fixed;
     top: 30px;
     width: 750px;
-    height: 1200px;
+    height: 90vh;
     display: none;
     z-index: 20;
+    overflow-y: scroll;
     background-color: #181818;
     border-radius: 10px;
 }
+
+
+
+#show-modal-item::-webkit-scrollbar {
+    width: 4px;
+    height: 5px;
+}
+
+#show-modal-item::-webkit-scrollbar-track {
+    background: inherit;
+}
+
+#show-modal-item::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 10px;
+
+}
+
+#show-modal-item::-webkit-scrollbar-thumb:hover {
+    background: #e50914;
+    cursor: pointer;
+}
+
+
 
 .item-trailer {
     width: 100%;
@@ -509,6 +534,49 @@ main {
     font-weight: 400;
 }
 
+
 .item-category {
-    flex-direction: row;
+    height: 320px;
 }
+
+.similar-item {
+    display: flex;
+    width: 100%;
+    height: 300px;
+    flex-wrap: wrap;
+    flex: 1;
+    gap: 20px;
+    overflow-y: scroll;
+}
+
+.similar-item::-webkit-scrollbar {
+    width: 4px;
+    height: 5px;
+}
+
+/* Track */
+.similar-item::-webkit-scrollbar-track {
+    background: inherit;
+}
+
+.similar-item::-webkit-scrollbar-thumb{
+    background: #fff;
+    border-radius: 10px;
+
+}
+
+.similar-item::-webkit-scrollbar-thumb:hover {
+    background: #e50914;
+    cursor: pointer;
+}
+
+
+.similar-item img {
+    width: 190px;
+    cursor: pointer;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
